@@ -27,7 +27,7 @@ app.get('/getProvinceNewsCN', function (req, res) {
       item.pubDate >= Date.parse(start) &&
       item.pubDate < Date.parse(end)
   ).sort(function (a, b) {
-    return a.pubDate > b.pubDate;
+    return a.pubDate > b.pubDate ? 1 : -1;
   });
   dx.forEach(function (d) {
     let ni = {};
@@ -53,7 +53,7 @@ app.get('/getCountryNewsCN', function (req, res) {
       item.pubDate >= Date.parse(start) &&
       item.pubDate < Date.parse(end)
   ).sort(function (a, b) {
-    return a.pubDate > b.pubDate;
+    return a.pubDate > b.pubDate ? 1 : -1;
   });
   dx.forEach(function (d) {
     let ni = {};
