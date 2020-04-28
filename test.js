@@ -1,1 +1,1 @@
-console.log(new Date('2020/2/20') - new Date('2020/2/19'));
+console.log(Date.parse('Mon Apr 20 2020'));

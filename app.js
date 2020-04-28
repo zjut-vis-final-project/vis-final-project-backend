@@ -6,6 +6,7 @@ var logger = require('morgan');
 var Newsdata = require('./public/data/DXYNews-TimeSeries.json');
 var app = express();
 var cors = require('cors');
+var getAllProvinceBasic = require('./api/getAllProvinceBasic');
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/getAllProvinceBasic', getAllProvinceBasic);
 app.get('/getProvinceNewsCN', function (req, res) {
   let start = req.query.start;
   let end = req.query.end;
