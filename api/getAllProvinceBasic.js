@@ -46,6 +46,12 @@ var getAllProvinceBasic = function (req, res) {
     status: 200,
     province: [],
   };
+  let datas = data.filter(
+    (item) =>
+      item.updateTime >= Date.parse(start) &&
+      item.updateTime < Date.parse(end) + 86400000
+  );
+
   for (let i = 0; i < provinces.length; i++) {
     let pItem = {
       pro_name: provinces[i].pv_name,
@@ -59,17 +65,21 @@ var getAllProvinceBasic = function (req, res) {
       pro_data: [],
       pro_city: [],
     };
-    let datad = data
-      .filter((item) => item.provinceName === provinces[i].pv_name)
-      .map(function (d) {
-        let temp = {
-          pro_confirmed: d.confirmedCount,
-          pro_death: d.deadCount,
-          pro_cure: d.curedCount,
-          time: new Date(d.updateTime).toDateString(),
-        };
-        return temp;
-      });
+    let datat = datas.filter(
+      (item) => item.provinceName === provinces[i].pv_name
+    );
+
+    let cityd = datat[0].cities;
+
+    let datad = datat.map(function (d) {
+      let temp = {
+        pro_confirmed: d.confirmedCount,
+        pro_death: d.deadCount,
+        pro_cure: d.curedCount,
+        time: new Date(d.updateTime).toDateString(),
+      };
+      return temp;
+    });
     let datam = [];
     let obj = {};
     datad.forEach(function (d) {
@@ -81,22 +91,11 @@ var getAllProvinceBasic = function (req, res) {
     datam.sort(function (a, b) {
       return Date.parse(a.time) > Date.parse(b.time) ? 1 : -1;
     });
-
-    pItem.pro_data = datam.filter(
-      (item) =>
-        Date.parse(item.time) >= Date.parse(start) &&
-        Date.parse(item.time) < Date.parse(end) + 86400000
-    );
+    pItem.pro_data = datam;
     pItem.pro_whole.confirmed =
       pItem.pro_data[pItem.pro_data.length - 1].pro_confirmed;
     pItem.pro_whole.death = pItem.pro_data[pItem.pro_data.length - 1].pro_death;
     pItem.pro_whole.cure = pItem.pro_data[pItem.pro_data.length - 1].pro_cure;
-    let cityd = data.filter(
-      (item) =>
-        item.provinceName === provinces[i].pv_name &&
-        item.updateTime >= Date.parse(end) &&
-        item.updateTime < Date.parse(end) + 86400000
-    )[0].cities;
 
     pItem.pro_city = cityd.map(function (k) {
       let tempcity = {
