@@ -24,6 +24,15 @@ var getCountryNewsCN = function (req, res) {
     ni.news_owner = d.infoSource;
     data.news_cn.push(ni);
   });
+  let datam = [];
+  let obj = {};
+  data.news_cn.forEach(function (d) {
+    if (!obj[d.news_id]) {
+      obj[d.news_id] = 'lap';
+      datam.push(d);
+    }
+  });
+  data.news_cn = datam;
   res.send(data);
 };
 module.exports = getCountryNewsCN;
