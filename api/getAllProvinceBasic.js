@@ -1,4 +1,5 @@
-var data = require('../public/data/DXYArea-TimeSeries.json');
+var datadata = require('../public/data/DXYArea-TimeSeries.json');
+var data = new Object(datadata);
 var provinces = [
   {
     pv_name: '北京市',
@@ -68,8 +69,12 @@ var getAllProvinceBasic = function (req, res) {
     let datat = datas.filter(
       (item) => item.provinceName === provinces[i].pv_name
     );
-
-    let cityd = datat[0].cities;
+    let flag = false;
+    let cityd = [];
+    if (new Object(datat[0]).hasOwnProperty('cities')) {
+      cityd = datat[0].cities;
+      flag = true;
+    }
 
     let datad = datat.map(function (d) {
       let temp = {
@@ -92,20 +97,23 @@ var getAllProvinceBasic = function (req, res) {
       return Date.parse(a.time) > Date.parse(b.time) ? 1 : -1;
     });
     pItem.pro_data = datam;
-    pItem.pro_whole.confirmed =
-      pItem.pro_data[pItem.pro_data.length - 1].pro_confirmed;
-    pItem.pro_whole.death = pItem.pro_data[pItem.pro_data.length - 1].pro_death;
-    pItem.pro_whole.cure = pItem.pro_data[pItem.pro_data.length - 1].pro_cure;
+    if (datam[datam.length - 1]) {
+      pItem.pro_whole.confirmed = datam[datam.length - 1].pro_confirmed;
+      pItem.pro_whole.death = datam[datam.length - 1].pro_death;
+      pItem.pro_whole.cure = datam[datam.length - 1].pro_cure;
+    }
+    if (flag) {
+      pItem.pro_city = cityd.map(function (k) {
+        let tempcity = {
+          city_name: k.cityName,
+          city_confirmed: k.confirmedCount,
+          city_death: k.deadCount,
+          city_cure: k.curedCount,
+        };
+        return tempcity;
+      });
+    }
 
-    pItem.pro_city = cityd.map(function (k) {
-      let tempcity = {
-        city_name: k.cityName,
-        city_confirmed: k.confirmedCount,
-        city_death: k.deadCount,
-        city_cure: k.curedCount,
-      };
-      return tempcity;
-    });
     resdata.province.push(pItem);
   }
   res.send(resdata);
