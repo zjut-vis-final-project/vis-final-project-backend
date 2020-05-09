@@ -6,6 +6,7 @@ var logger = require('morgan');
 var app = express();
 var cors = require('cors');
 var getAllProvinceBasic = require('./api/getAllProvinceBasic');
+var getCountryBasic = require('./api/getCountryBasic');
 var getCountryNewsCN = require('./api/getCountryNewsCN');
 var getProvinceNewsCN = require('./api/getProvinceNewsCN');
 app.use(cors());
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/getAllProvinceBasic', getAllProvinceBasic);
 app.get('/getProvinceNewsCN', getProvinceNewsCN);
 app.get('/getCountryNewsCN', getCountryNewsCN);
-
+app.get('/getCountryBasic', getCountryBasic);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');

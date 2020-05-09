@@ -97,10 +97,13 @@ var getAllProvinceBasic = function (req, res) {
       return Date.parse(a.time) > Date.parse(b.time) ? 1 : -1;
     });
     pItem.pro_data = datam;
-    if (datam[datam.length - 1]) {
-      pItem.pro_whole.confirmed = datam[datam.length - 1].pro_confirmed;
-      pItem.pro_whole.death = datam[datam.length - 1].pro_death;
-      pItem.pro_whole.cure = datam[datam.length - 1].pro_cure;
+    for (let l = datam.length - 1; l >= 0; l--) {
+      if (datam[l]) {
+        pItem.pro_whole.confirmed = datam[l].pro_confirmed;
+        pItem.pro_whole.death = datam[l].pro_death;
+        pItem.pro_whole.cure = datam[l].pro_cure;
+      }
+      break;
     }
     if (flag) {
       pItem.pro_city = cityd.map(function (k) {
