@@ -9,6 +9,7 @@ var getAllProvinceBasic = require('./api/getAllProvinceBasic');
 var getCountryBasic = require('./api/getCountryBasic');
 var getCountryNewsCN = require('./api/getCountryNewsCN');
 var getProvinceNewsCN = require('./api/getProvinceNewsCN');
+var getGender = require('./api/getGender');
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -24,6 +25,7 @@ app.get('/getAllProvinceBasic', getAllProvinceBasic);
 app.get('/getProvinceNewsCN', getProvinceNewsCN);
 app.get('/getCountryNewsCN', getCountryNewsCN);
 app.get('/getCountryBasic', getCountryBasic);
+app.get('/getGender', getGender);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
