@@ -10,6 +10,7 @@ var getCountryBasic = require('./api/getCountryBasic');
 var getCountryNewsCN = require('./api/getCountryNewsCN');
 var getProvinceNewsCN = require('./api/getProvinceNewsCN');
 var getGender = require('./api/getGender');
+var getWordList = require('./api/getWordList');
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -19,13 +20,14 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/getAllProvinceBasic', getAllProvinceBasic);
 app.get('/getProvinceNewsCN', getProvinceNewsCN);
 app.get('/getCountryNewsCN', getCountryNewsCN);
 app.get('/getCountryBasic', getCountryBasic);
 app.get('/getGender', getGender);
+app.get('/getWordList', getWordList);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
