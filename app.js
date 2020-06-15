@@ -11,6 +11,7 @@ var getCountryNewsCN = require('./api/getCountryNewsCN');
 var getProvinceNewsCN = require('./api/getProvinceNewsCN');
 var getGender = require('./api/getGender');
 var getWordList = require('./api/getWordList');
+var getWorldBasic = require('./api/getWorldBasic');
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ app.get('/getCountryNewsCN', getCountryNewsCN);
 app.get('/getCountryBasic', getCountryBasic);
 app.get('/getGender', getGender);
 app.get('/getWordList', getWordList);
+app.get('/getWorldBasic', getWorldBasic);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
