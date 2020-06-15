@@ -10,7 +10,8 @@ var getWordList = function (req, res) {
     .filter(
       (item) =>
         item.pubDate >= Date.parse(start) &&
-        item.pubDate < Date.parse(end) + 86400000
+        item.pubDate < Date.parse(end) + 86400000 &&
+        (!item.provinceName)
     )
     .sort(function (a, b) {
       return a.pubDate > b.pubDate ? 1 : -1;
