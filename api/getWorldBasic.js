@@ -1,4 +1,4 @@
-var data_origin = require('./public/data/DXYOverall-TimeSeries.json');
+var data_origin = require('../public/data/DXYOverall-TimeSeries.json');
 var data_s = [];
 data_origin.forEach((item) => {
   if (item.globalStatistics) {

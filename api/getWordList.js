@@ -11,7 +11,7 @@ var getWordList = function (req, res) {
       (item) =>
         item.pubDate >= Date.parse(start) &&
         item.pubDate < Date.parse(end) + 86400000 &&
-        (!item.provinceName)
+        !item.provinceName
     )
     .sort(function (a, b) {
       return a.pubDate > b.pubDate ? 1 : -1;
@@ -34,7 +34,18 @@ var getWordList = function (req, res) {
       datam.push(d);
     }
   });
+
+  let dateTemp = new Date().toDateString();
+  let dateIcon = -1;
+  datam.forEach(function (item) {
+    if (new Date(item.pubDate).toDateString() !== dateTemp) {
+      dateTemp = new Date(item.pubDate).toDateString();
+      dateIcon++;
+      item.dateNum = dateIcon;
+    }
+  });
   data.news_pro = datam;
+
   res.send(data);
 };
 module.exports = getWordList;
