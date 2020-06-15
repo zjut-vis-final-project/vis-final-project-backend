@@ -35,16 +35,22 @@ var getWordList = function (req, res) {
     }
   });
 
-  let dateTemp = new Date().toDateString();
+  let dateTemp = '';
   let dateIcon = -1;
-  datam.forEach(function (item) {
-    if (new Date(item.pubDate).toDateString() !== dateTemp) {
-      dateTemp = new Date(item.pubDate).toDateString();
+
+  data.news_pro = datam.map(function (item) {
+    let tempItem = { ...item };
+    if (new Date(tempItem.news_time).toDateString() !== dateTemp) {
+      dateTemp = new Date(tempItem.news_time).toDateString();
       dateIcon++;
-      item.dateNum = dateIcon;
+      tempItem['dateNum'] = dateIcon;
+    } else {
+      tempItem['dateNum'] = dateIcon;
     }
+    console.log(tempItem);
+
+    return tempItem;
   });
-  data.news_pro = datam;
 
   res.send(data);
 };
