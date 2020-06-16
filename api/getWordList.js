@@ -47,7 +47,7 @@ var getWordList = function (req, res) {
     } else {
       tempItem['dateNum'] = dateIcon;
     }
-    console.log(tempItem);
+    // console.log(tempItem);
 
     return tempItem;
   });
